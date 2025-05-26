@@ -1,17 +1,31 @@
+/**
+ * Główny komponent aplikacji pogodowej
+ * 
+ * Co robi ten plik:
+ * - Wyświetla formularz wyszukiwania miasta
+ * - Pokazuje aktualną pogodę dla wybranego miasta
+ * - Zarządza stanem ładowania i błędów
+ * - Wyświetla prognozę pogody
+ * 
+ * Jak to działa:
+ * 1. Użytkownik wpisuje nazwę miasta
+ * 2. Po wyszukaniu pokazuje się aktualna pogoda
+ * 3. Pod spodem wyświetla się 5-dniowa prognoza
+ */
+
 import { useState } from 'react'
 import { 
   Container, 
   TextField, 
   Button, 
-  Card, 
-  CardContent, 
   Typography, 
   Box,
   CircularProgress,
   Alert
 } from '@mui/material'
-import axios from 'axios'
+import { weatherApi } from './services/api'
 import Forecast from './components/Forecast'
+import WeatherCard from './components/WeatherCard'
 
 function App() {
   const [city, setCity] = useState('')
@@ -27,10 +41,10 @@ function App() {
     setError(null)
     
     try {
-      const response = await axios.get(`/api/weather/${city}`)
-      setWeather(response.data)
+      const data = await weatherApi.getCurrentWeather(city)
+      setWeather(data)
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to fetch weather data')
+      setError(err.message)
       setWeather(null)
     } finally {
       setLoading(false)
@@ -69,33 +83,16 @@ function App() {
       )}
 
       {weather && (
-        <Card sx={{ mb: 4 }}>
-          <CardContent>
-            <Typography variant="h5" component="h2" gutterBottom>
-              {weather.city}
-            </Typography>
-            <Typography variant="h6" color="textSecondary">
-              {weather.temperature}°C
-            </Typography>
-            <Typography variant="body1">
-              Feels like: {weather.feels_like}°C
-            </Typography>
-            <Typography variant="body1">
-              Humidity: {weather.humidity}%
-            </Typography>
-            <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
-              {weather.description}
-            </Typography>
-            {weather.icon && (
-              <Box sx={{ mt: 2, textAlign: 'center' }}>
-                <img
-                  src={`http://openweathermap.org/img/w/${weather.icon}.png`}
-                  alt={weather.description}
-                />
-              </Box>
-            )}
-          </CardContent>
-        </Card>
+        <Box sx={{ mb: 4 }}>
+          <WeatherCard
+            title={weather.city}
+            temperature={weather.temperature}
+            feelsLike={weather.feels_like}
+            humidity={weather.humidity}
+            description={weather.description}
+            icon={weather.icon}
+          />
+        </Box>
       )}
 
       {weather && <Forecast city={city} />}

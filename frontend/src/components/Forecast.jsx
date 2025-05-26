@@ -1,14 +1,21 @@
+/**
+ * Komponent prognozy pogody - wyświetla 5-dniową prognozę
+ * 
+ * Co robi:
+ * - Pobiera prognozę pogody dla wybranego miasta
+ * - Wyświetla prognozę w formie siatki kart
+ * - Pokazuje temperaturę, wilgotność i opis dla każdego przedziału czasowego
+ * 
+ * Jak to działa:
+ * 1. Otrzymuje nazwę miasta jako prop
+ * 2. Automatycznie pobiera prognozę po zmianie miasta
+ * 3. Wyświetla dane w formie kart pogodowych
+ */
+
 import { useState, useEffect } from 'react';
-import { 
-  Card, 
-  CardContent, 
-  Typography, 
-  Box, 
-  Grid,
-  CircularProgress,
-  Alert
-} from '@mui/material';
-import axios from 'axios';
+import { Typography, Box, Grid, CircularProgress, Alert } from '@mui/material';
+import { weatherApi } from '../services/api';
+import WeatherCard from './WeatherCard';
 
 function Forecast({ city }) {
   const [forecast, setForecast] = useState(null);
@@ -26,10 +33,10 @@ function Forecast({ city }) {
     setError(null);
     
     try {
-      const response = await axios.get(`/api/forecast/${city}`);
-      setForecast(response.data);
+      const data = await weatherApi.getForecast(city);
+      setForecast(data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to fetch forecast data');
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -61,34 +68,15 @@ function Forecast({ city }) {
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {forecast.forecast.map((item, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">
-                    {new Date(item.datetime).toLocaleDateString()}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    {new Date(item.datetime).toLocaleTimeString()}
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    <img
-                      src={`http://openweathermap.org/img/w/${item.icon}.png`}
-                      alt={item.description}
-                    />
-                    <Typography variant="h6">
-                      {item.temperature}°C
-                    </Typography>
-                  </Box>
-                  <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                    {item.description}
-                  </Typography>
-                  <Typography variant="body2">
-                    Humidity: {item.humidity}%
-                  </Typography>
-                  <Typography variant="body2">
-                    Wind: {item.wind_speed} m/s
-                  </Typography>
-                </CardContent>
-              </Card>
+              <WeatherCard
+                title={new Date(item.datetime).toLocaleDateString()}
+                temperature={item.temperature}
+                humidity={item.humidity}
+                description={item.description}
+                icon={item.icon}
+                subtitle={new Date(item.datetime).toLocaleTimeString()}
+                windSpeed={item.wind_speed}
+              />
             </Grid>
           ))}
         </Grid>
