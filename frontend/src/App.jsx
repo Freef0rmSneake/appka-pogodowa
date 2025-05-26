@@ -11,6 +11,7 @@ import {
   Alert
 } from '@mui/material'
 import axios from 'axios'
+import Forecast from './components/Forecast'
 
 function App() {
   const [city, setCity] = useState('')
@@ -37,7 +38,7 @@ function App() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
         Weather App
       </Typography>
@@ -68,7 +69,7 @@ function App() {
       )}
 
       {weather && (
-        <Card>
+        <Card sx={{ mb: 4 }}>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
               {weather.city}
@@ -96,6 +97,8 @@ function App() {
           </CardContent>
         </Card>
       )}
+
+      {weather && <Forecast city={city} />}
     </Container>
   )
 }
