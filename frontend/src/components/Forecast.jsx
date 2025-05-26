@@ -61,7 +61,7 @@ function Forecast({ city }) {
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h5" component="h2" gutterBottom align="center">
-        5-Day Weather Forecast
+        Prognoza 5-dniowa
       </Typography>
 
       {forecast && (

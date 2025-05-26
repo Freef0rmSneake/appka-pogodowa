@@ -1,3 +1,40 @@
+# Aplikacja Pogodowa - Frontend
+
+Aplikacja pogodowa pokazująca aktualną pogodę i prognozę dla 10 największych miast w Polsce.
+
+## Funkcje
+
+- Wyświetlanie aktualnej pogody
+- Prognoza 5-dniowa
+- Lista 10 największych polskich miast
+- Automatyczne uzupełnianie nazw miast
+- Interfejs w języku polskim
+
+## Technologie
+
+- React
+- Material-UI
+- Vite
+- Axios
+
+## Instalacja
+
+```bash
+npm install
+```
+
+## Uruchomienie
+
+```bash
+npm run dev
+```
+
+## Budowanie
+
+```bash
+npm run build
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

@@ -13,7 +13,7 @@
  * 3. Pod spodem wyświetla się 5-dniowa prognoza
  */
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Container, 
   TextField, 
@@ -21,7 +21,8 @@ import {
   Typography, 
   Box,
   CircularProgress,
-  Alert
+  Alert,
+  Autocomplete
 } from '@mui/material'
 import { weatherApi } from './services/api'
 import Forecast from './components/Forecast'
@@ -29,9 +30,23 @@ import WeatherCard from './components/WeatherCard'
 
 function App() {
   const [city, setCity] = useState('')
+  const [cities, setCities] = useState([])
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetchCities()
+  }, [])
+
+  const fetchCities = async () => {
+    try {
+      const citiesList = await weatherApi.getCities()
+      setCities(citiesList)
+    } catch (err) {
+      setError('Nie udało się załadować listy miast')
+    }
+  }
 
   const handleSearch = async (e) => {
     e.preventDefault()
@@ -54,25 +69,31 @@ function App() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom align="center">
-        Weather App
+        Aplikacja Pogodowa
       </Typography>
 
       <Box component="form" onSubmit={handleSearch} sx={{ mb: 4 }}>
-        <TextField
-          fullWidth
-          label="Enter city name"
+        <Autocomplete
+          options={cities}
           value={city}
-          onChange={(e) => setCity(e.target.value)}
-          sx={{ mr: 2 }}
+          onChange={(event, newValue) => setCity(newValue || '')}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              fullWidth
+              label="Wybierz miasto"
+              required
+            />
+          )}
+          sx={{ mb: 2 }}
         />
         <Button 
           type="submit" 
           variant="contained" 
           fullWidth 
-          sx={{ mt: 2 }}
           disabled={loading || !city.trim()}
         >
-          {loading ? <CircularProgress size={24} /> : 'Search'}
+          {loading ? <CircularProgress size={24} /> : 'Sprawdź pogodę'}
         </Button>
       </Box>
 

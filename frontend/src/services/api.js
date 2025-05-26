@@ -20,6 +20,15 @@ import axios from 'axios';
 const API_BASE_URL = '/api';
 
 export const weatherApi = {
+  getCities: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/cities`);
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch cities list');
+    }
+  },
+
   getCurrentWeather: async (city) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/weather/${city}`);

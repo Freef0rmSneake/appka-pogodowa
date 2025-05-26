@@ -30,12 +30,12 @@ function WeatherCard({ title, temperature, feelsLike, humidity, description, ico
         </Typography>
         {feelsLike && (
           <Typography variant="body1">
-            Feels like: {feelsLike}°C
+            Odczuwalna: {feelsLike}°C
           </Typography>
         )}
         {humidity && (
           <Typography variant="body1">
-            Humidity: {humidity}%
+            Wilgotność: {humidity}%
           </Typography>
         )}
         <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
