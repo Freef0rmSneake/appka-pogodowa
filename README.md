@@ -1,61 +1,91 @@
-# Projekt Aplikacji Pogodowej (Zaliczenie)
+# Aplikacja Pogodowa
 
 
-## Technologie Główne
+## Funkcjonalności
 
-* **Frontend:** React (Vite)
-* **Backend:** Python (Flask)
-* **API Pogodowe:** OpenWeatherMap
-* **Baza Danych/reszta:** Do ustalenia
+- Dane pogodowe w czasie rzeczywistym dla dowolnego miasta
+- Responsywny design dla wszystkich urządzeń
+- Aktualne informacje pogodowe zawierające:
+  - Temperaturę
+  - Temperaturę odczuwalną
+  - Wilgotność
+  - Opis pogody
+  - Ikonę pogody
+- Stany ładowania i obsługa błędów
+- Wsparcie dla CORS (Cross-Origin Resource Sharing)
 
-## Struktura Projektu
+## Technologie
 
-* `/frontend`: Kod aplikacji React
-* `/backend`: Kod aplikacji Flask
+### Frontend
+- React
+- Vite
+- Material-UI
+- Axios
+- Emotion
 
-## Setup
+### Backend
+- Flask
+- Python-dotenv
+- Requests
+- Flask-CORS
 
-1.  **Sklonuj repozytorium:**
-    ```
-    git clone [link]
-    cd weather-app-project
-    ```
+## Wymagania
 
-2.  **Skonfiguruj Frontend:**
-    ```
-    cd frontend
-    npm install
-    cd ..
-    ```
+- Node.js
+- Python
+- Klucz API OpenWeatherMap
 
-3.  **Skonfiguruj Backend:**
-    ```
-    cd backend
-    python -m venv venv  # Utwórz wirtualne środowisko
-    # Aktywuj środowisko (zobacz komendy poniżej)
-    # Windows (PowerShell):  venv\Scripts\Activate.ps1
-    # Linux:   source venv/bin/activate
-    pip install -r requirements.txt # Zainstaluj zależności
-    cd ..
-    ```
+## Instalacja
 
-## Uruchamianie Aplikacji Lokalnie
+1. Sklonuj repozytorium:
+```bash
+git clone <adres>
+cd weather-app
+```
 
-1.  **Uruchom Backend:**
-    ```
-    cd backend
-    # Aktywuj venv, jeśli nie jest aktywne
-    flask run
-    ```
-    Backend będzie działał na `http://localhost:5000`.
+2. Konfiguracja Backendu:
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # W systemie Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-2.  **Uruchom Frontend:**
-    Otwórz *drugi* terminal
-    ```
-    cd frontend
-    npm run dev
-    ```
+3. Utwórz plik `.env` w katalogu backend:
+```
+OPENWEATHER_API_KEY=twój_klucz_api
+```
 
-## Klucz API
+4. Konfiguracja Frontendu:
+```bash
+cd frontend
+npm install
+```
 
-Do zrobienia
+## Uruchamianie Aplikacji
+
+1. Uruchom serwer backend:
+```bash
+cd backend
+python main.py
+```
+
+2. W nowym terminalu, uruchom serwer deweloperski frontendu:
+```bash
+cd frontend
+npm run dev
+```
+
+3. Otwórz przeglądarkę i przejdź pod adres `http://localhost:5173`
+
+## Endpointy API
+
+### Dane Pogodowe
+- `GET /api/weather/<miasto>`
+  - Zwraca aktualne dane pogodowe dla podanego miasta
+  - Odpowiedź zawiera temperaturę, wilgotność, opis pogody i ikonę
+
+## Zmienne Środowiskowe
+
+### Backend (.env)
+- `OPENWEATHER_API_KEY`: Twój klucz API OpenWeatherMap
