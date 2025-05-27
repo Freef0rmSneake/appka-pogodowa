@@ -53,7 +53,6 @@ def format_forecast_data(forecast_data):
     }
 
 def make_weather_request(endpoint, city):
-    """Helper function to make API requests and handle common error cases"""
     try:
         response = requests.get(
             f"{OPENWEATHER_BASE_URL}/{endpoint}",
