@@ -1,18 +1,14 @@
-# backend/app.py
 from flask import Flask, jsonify
 from flask_cors import CORS
 from decouple import config
 import requests
-from datetime import datetime, timedelta
 
 app = Flask(__name__)
 CORS(app)
 
-# Load environment variables
 OPENWEATHER_API_KEY = config('OPENWEATHER_API_KEY')
 OPENWEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5"
 
-# List of 10 biggest Polish cities
 POLISH_CITIES = [
     "Warszawa",
     "Kraków",
@@ -56,6 +52,25 @@ def format_forecast_data(forecast_data):
         ]
     }
 
+def make_weather_request(endpoint, city):
+    """Helper function to make API requests and handle common error cases"""
+    try:
+        response = requests.get(
+            f"{OPENWEATHER_BASE_URL}/{endpoint}",
+            params={
+                "q": f"{city},PL",
+                "appid": OPENWEATHER_API_KEY,
+                "units": "metric"
+            }
+        )
+        response.raise_for_status()
+        return response.json()
+    
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Nie udało się pobrać danych pogodowych: {str(e)}")
+    except Exception as e:
+        raise Exception(f"Wystąpił nieoczekiwany błąd: {str(e)}")
+
 @app.route('/')
 def home():
     return "Aplikacja Pogodowa - Backend Działa!"
@@ -70,31 +85,10 @@ def get_weather(city):
         return jsonify({"error": "Nieprawidłowe miasto. Wybierz z listy dostępnych miast."}), 400
 
     try:
-        # Make request to OpenWeatherMap API
-        response = requests.get(
-            f"{OPENWEATHER_BASE_URL}/weather",
-            params={
-                "q": f"{city},PL",
-                "appid": OPENWEATHER_API_KEY,
-                "units": "metric"
-            }
-        )
-        
-        # Check if request was successful
-        response.raise_for_status()
-        
-        # Get the weather data
-        weather_data = response.json()
-        
-        # Format the response
+        weather_data = make_weather_request("weather", city)
         return jsonify(format_weather_data(weather_data))
-    
-    except requests.exceptions.RequestException as e:
-        return jsonify({"error": "Nie udało się pobrać danych pogodowych", "details": str(e)}), 500
-    except KeyError as e:
-        return jsonify({"error": "Nieprawidłowa odpowiedź z serwisu pogodowego", "details": str(e)}), 500
     except Exception as e:
-        return jsonify({"error": "Wystąpił nieoczekiwany błąd", "details": str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/forecast/<city>')
 def get_forecast(city):
@@ -102,31 +96,10 @@ def get_forecast(city):
         return jsonify({"error": "Nieprawidłowe miasto. Wybierz z listy dostępnych miast."}), 400
 
     try:
-        # Make request to OpenWeatherMap API for 5-day/3-hour forecast
-        response = requests.get(
-            f"{OPENWEATHER_BASE_URL}/forecast",
-            params={
-                "q": f"{city},PL",
-                "appid": OPENWEATHER_API_KEY,
-                "units": "metric"
-            }
-        )
-        
-        # Check if request was successful
-        response.raise_for_status()
-        
-        # Get the forecast data
-        forecast_data = response.json()
-        
-        # Format the response
+        forecast_data = make_weather_request("forecast", city)
         return jsonify(format_forecast_data(forecast_data))
-    
-    except requests.exceptions.RequestException as e:
-        return jsonify({"error": "Nie udało się pobrać prognozy pogody", "details": str(e)}), 500
-    except KeyError as e:
-        return jsonify({"error": "Nieprawidłowa odpowiedź prognozy", "details": str(e)}), 500
     except Exception as e:
-        return jsonify({"error": "Wystąpił nieoczekiwany błąd", "details": str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
