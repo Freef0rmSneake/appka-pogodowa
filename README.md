@@ -6,8 +6,8 @@ Prosta aplikacja pogodowa wyświetlająca aktualną pogodę i prognozę dla pols
 
 ```
 apkapog/
-├── frontend/          # Aplikacja React (frontend)
-└── backend/           # Aplikacja Flask (backend)
+├── frontend/         # Aplikacja React (frontend)
+└── backend/          # Aplikacja Flask (backend)
 ```
 
 ## Wymagania wstępne
