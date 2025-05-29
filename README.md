@@ -1,100 +1,91 @@
-# Aplikacja Pogodowa
+Aplikacja Pogodowa
 
-Prosta aplikacja pogodowa wyświetlająca aktualną pogodę i prognozę dla polskich miast.
+## Funkcjonalności
 
-## Struktura projektu
+- Dane pogodowe w czasie rzeczywistym dla dowolnego miasta
+- Responsywny design dla wszystkich urządzeń
+- Aktualne informacje pogodowe zawierające:
+  - Temperaturę
+  - Temperaturę odczuwalną
+  - Wilgotność
+  - Opis pogody
+  - Ikonę pogody
+- Stany ładowania i obsługa błędów
+- Wsparcie dla CORS (Cross-Origin Resource Sharing)
 
-```
-apkapog/
-├── frontend/          # Aplikacja React (frontend)
-└── backend/           # Aplikacja Flask (backend)
-```
-
-## Wymagania wstępne
-
-- Node.js (v14 lub nowszy)
-- Python 3.8+
-- npm lub yarn
-- pip (menedżer pakietów Pythona)
-
-## Konfiguracja backendu
-
-1. Przejdź do katalogu backend:
-   ```bash
-   cd backend/appka-pogodowa-backend
-   ```
-
-2. Zainstaluj wymagane pakiety Pythona:
-   ```bash
-   pip install -r backend/requirements.txt
-   ```
-
-3. Utwórz plik `.env` w katalogu `backend/appka-pogodowa-backend` i dodaj swój klucz API OpenWeather:
-   ```
-   OPENWEATHER_API_KEY=twoj_klucz_api_openweather
-   ```
-
-4. Uruchom serwer backendowy:
-   ```bash
-   cd backend
-   python -m flask run
-   ```
-
-   Serwer powinien być dostępny pod adresem `http://localhost:5000`
-
-## Konfiguracja frontendu
-
-1. Przejdź do katalogu frontend:
-   ```bash
-   cd frontend
-   ```
-
-2. Zainstaluj zależności:
-   ```bash
-   npm install
-   # lub
-   yarn install
-   ```
-
-3. Uruchom serwer deweloperski:
-   ```bash
-   npm run dev
-   # lub
-   yarn dev
-   ```
-
-   Aplikacja będzie dostępna pod adresem `http://localhost:5173`
-
-## Dostępne miasta
-
-Aplikacja obsługuje następujące polskie miasta:
-- Warszawa
-- Kraków
-- Łódź
-- Wrocław
-- Poznań
-- Gdańsk
-- Szczecin
-- Bydgoszcz
-- Lublin
-- Katowice
-
-## Użyte technologie
+## Technologie
 
 ### Frontend
-- React 18
-- TypeScript
-- Styled Components
+- React
 - Vite
-- React Icons
+- Material-UI
+- Axios
+- Emotion
 
 ### Backend
-- Python 3.8+
 - Flask
-- python-dotenv
-- requests
-- flask-cors
+- Python-dotenv
+- Requests
+- Flask-CORS
 
-## Licencja
+## Wymagania
 
-MIT
+- Node.js
+- Python
+- Klucz API OpenWeatherMap
+
+## Instalacja
+
+1. Sklonuj repozytorium:
+```bash
+git clone <adres>
+cd weather-app
+```
+
+2. Konfiguracja Backendu:
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # W systemie Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+3. Utwórz plik `.env` w katalogu backend:
+```
+OPENWEATHER_API_KEY=twój_klucz_api
+```
+
+4. Konfiguracja Frontendu:
+```bash
+cd frontend
+npm install
+```
+
+## Uruchamianie Aplikacji
+
+1. Uruchom serwer backend:
+```bash
+cd backend
+python main.py
+```
+
+2. W nowym terminalu, uruchom serwer deweloperski frontendu:
+```bash
+cd frontend
+npm run dev
+```
+
+3. Otwórz przeglądarkę i przejdź pod adres `http://localhost:5173`
+
+## Endpointy API
+
+### Dane Pogodowe
+- `GET /api/weather/<miasto>`
+  - Zwraca aktualne dane pogodowe dla podanego miasta
+  - Odpowiedź zawiera temperaturę, wilgotność, opis pogody i ikonę
+
+## Zmienne Środowiskowe
+
+### Backend (.env)
+- `OPENWEATHER_API_KEY`: Twój klucz API OpenWeatherMap
+
