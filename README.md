@@ -1,5 +1,4 @@
-# Aplikacja Pogodowa
-
+Aplikacja Pogodowa
 
 ## Funkcjonalności
 
@@ -89,3 +88,4 @@ npm run dev
 
 ### Backend (.env)
 - `OPENWEATHER_API_KEY`: Twój klucz API OpenWeatherMap
+

@@ -32,7 +32,8 @@ def format_weather_data(weather_data):
         "feels_like": weather_data["main"]["feels_like"],
         "humidity": weather_data["main"]["humidity"],
         "description": weather_data["weather"][0]["description"],
-        "icon": weather_data["weather"][0]["icon"]
+        "icon": weather_data["weather"][0]["icon"],
+        "wind_speed": weather_data["wind"]["speed"]
     }
 
 def format_forecast_data(forecast_data):

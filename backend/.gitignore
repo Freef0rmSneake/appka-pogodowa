@@ -1,8 +1,31 @@
+# Dependencies
+/frontend/node_modules/
+/backend/venv/
+
+# Build artifacts
+/frontend/dist/
+/frontend/.vite/
+
+# Python cache
 __pycache__/
-*.py[cod]
-*$py.class
-venv/
+*.pyc
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE configuration files (opcjonalnie)
+.idea/
+.vscode/
+
+# Environment variables (ważne! nigdy nie commituj sekretów)
 .env
-.pytest_cache/
-.coverage
-htmlcov/
+*.env
+.env.*
+!*.env.example
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
