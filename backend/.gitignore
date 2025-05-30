@@ -1,3 +1,4 @@
+
 # Dependencies
 /frontend/node_modules/
 /backend/venv/
@@ -29,3 +30,13 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+ 261ace5e0aaa591daad3d06a2631c76945ae1941

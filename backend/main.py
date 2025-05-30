@@ -32,8 +32,12 @@ def format_weather_data(weather_data):
         "feels_like": weather_data["main"]["feels_like"],
         "humidity": weather_data["main"]["humidity"],
         "description": weather_data["weather"][0]["description"],
+<<<<<<< HEAD
         "icon": weather_data["weather"][0]["icon"],
         "wind_speed": weather_data["wind"]["speed"]
+=======
+        "icon": weather_data["weather"][0]["icon"]
+>>>>>>> 261ace5e0aaa591daad3d06a2631c76945ae1941
     }
 
 def format_forecast_data(forecast_data):
@@ -75,6 +79,7 @@ def make_weather_request(endpoint, city):
 def home():
     return "Aplikacja Pogodowa - Backend Działa!"
 
+<<<<<<< HEAD
 @app.route('/api/cities', methods=['GET', 'OPTIONS'])
 def get_cities():
     try:
@@ -82,6 +87,11 @@ def get_cities():
     except Exception as e:
         print(f"[ERROR] /api/cities: {e}")
         return jsonify({'error': 'Internal server error'}), 500
+=======
+@app.route('/api/cities')
+def get_cities():
+    return jsonify(POLISH_CITIES)
+>>>>>>> 261ace5e0aaa591daad3d06a2631c76945ae1941
 
 @app.route('/api/weather/<city>')
 def get_weather(city):

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 Aplikacja Pogodowa
+=======
+# Aplikacja Pogodowa
+
+>>>>>>> 261ace5e0aaa591daad3d06a2631c76945ae1941
 
 ## Funkcjonalności
 
@@ -87,5 +92,9 @@ npm run dev
 ## Zmienne Środowiskowe
 
 ### Backend (.env)
+<<<<<<< HEAD
 - `OPENWEATHER_API_KEY`: Twój klucz API OpenWeatherMap
 
+=======
+- `OPENWEATHER_API_KEY`: Twój klucz API OpenWeatherMap
+>>>>>>> 261ace5e0aaa591daad3d06a2631c76945ae1941
