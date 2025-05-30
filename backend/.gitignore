@@ -29,3 +29,19 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Lokalna baza danych SQLite
+backend/search_history.db
+
+# Testowanie
+frontend/coverage/
+frontend/.vitest/
+*.lcov
+*.lcov.info
+
+# Build artefakty
+frontend/dist/
+frontend/.vite/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
