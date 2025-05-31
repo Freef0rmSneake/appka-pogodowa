@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from decouple import config
+from db import init_db, save_search, get_recent_searches
 import requests
 
 app = Flask(__name__)
@@ -86,9 +87,11 @@ def get_weather(city):
 
     try:
         weather_data = make_weather_request("weather", city)
+        save_search(city)
         return jsonify(format_weather_data(weather_data))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/api/forecast/<city>')
 def get_forecast(city):
@@ -101,5 +104,14 @@ def get_forecast(city):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/history')
+def get_history():
+    try:
+        recent_cities = get_recent_searches(limit=10)
+        return jsonify(recent_cities)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)

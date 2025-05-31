@@ -6,6 +6,7 @@ import { Forecast } from './components/Forecast';
 import { getWeather, getForecast, getCities } from './services/weatherService';
 import { WeatherData, ForecastData } from './types/weather';
 import { WiDaySunny } from 'react-icons/wi';
+import { SearchHistory } from './components/SearchHistory';
 
 const AppContainer = styled.div`
   max-width: 1200px;
@@ -107,7 +108,8 @@ const App = () => {
           onSearch={searchCity}
           loading={loading}
         />
-        
+        <SearchHistory onSelect={searchCity} />
+
         {error && <ErrorMessage>{error}</ErrorMessage>}
         
         {weather ? (
